@@ -27,7 +27,7 @@ def main():
     if args.auto:
         player_obj = player.AutoPlayer(game_obj)
     else:
-        raise NotImplementedError('manual play not yet implemented')
+        player_obj = player.ManualPlayer(game_obj)
 
     result = player_obj.play()
     print result
