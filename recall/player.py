@@ -1,4 +1,4 @@
-class Player(object):
+class AutoPlayer(object):
     """Recall game player.
 
     A player takes a game (as a constructor argument).  When
@@ -19,10 +19,6 @@ class Player(object):
             if a != b:
                 self.match_or_remember(a, guess[0])
                 self.match_or_remember(b, guess[1])
-            print self.cards
-            print self.matches
-            print self.memory
-            print
         return self.game.end(self.choose_cards())
 
     def match_or_remember(self, value, card):
