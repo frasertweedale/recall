@@ -1,3 +1,4 @@
+import abc
 import re
 
 
@@ -13,6 +14,8 @@ class Player(object):
     completion and the result of the game is returned.
 
     """
+    __metaclass__ = abc.ABCMeta
+
     def __init__(self, game):
         self.game = game
 
@@ -28,6 +31,14 @@ class Player(object):
                     self.notify_match(a, guess)
         except EndGameException as e:
             return self.game.end(e.args[0])
+
+    @abc.abstractmethod
+    def notify_match(self, value, cards):
+        pass
+
+    @abc.abstractmethod
+    def notify_nonmatch(self, value, card):
+        pass
 
 
 class AutoPlayer(Player):
