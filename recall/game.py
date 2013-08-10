@@ -1,3 +1,5 @@
+import random
+
 import requests
 
 
@@ -11,7 +13,6 @@ class OnlineGame(object):
         )
         data = r.json()
         self.id, self.x, self.y = data['id'], data['width'], data['height']
-
 
     def guess(self, cards):
         if cards[0] == cards[1]:
@@ -36,3 +37,35 @@ class OnlineGame(object):
         )
         data = r.json()
         return data['success'], data['message']
+
+
+def value_generator():
+    value = ord('a')
+    while True:
+        yield chr(value)
+        yield chr(value)
+        value += 1
+
+
+class OfflineGame(object):
+    def __init__(self):
+        self.x = 4
+        self.y = 4
+        cards = [(x, y) for x in range(self.x) for y in range(self.y)]
+        random.shuffle(cards)
+        values = value_generator()
+        self.cards = set(cards)
+        self.values_by_card = {card: next(values) for card in cards}
+
+    def guess(self, cards):
+        a, b = map(self.values_by_card.get, cards)
+        if a == b:
+            self.cards -= set(cards)
+        return a, b
+
+    def end(self, cards):
+        remaining = len(self.cards)
+        if remaining == 2:
+            return True, "for the win"
+        else:
+            return False, "epic fail; {} cards remaining".format(remaining)

@@ -18,7 +18,7 @@ def main():
     args = parser.parse_args()
 
     if args.local:
-        raise NotImplementedError('local games not yet implemented')
+        game_obj = game.OfflineGame()
     else:
         if not args.url:
             raise UserWarning('URL must be provided')
