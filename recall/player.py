@@ -96,6 +96,7 @@ class ManualPlayer(Player):
     def _play(self, screen):
         self.screen = screen
         self.obscure_cards()
+        self.alert('Enter "end" to end the game')
         self.screen.refresh()
         super(ManualPlayer, self).play()
 
@@ -151,6 +152,8 @@ class ManualPlayer(Player):
             self.screen.addstr(y, x, ' ')
         self.cards -= set(cards)
         self.matched_cards |= set(cards)
+        if len(self.cards) == 2:
+            raise EndGameException(tuple(self.cards))
 
     def notify_outcome(self, win, msg):
         self.alert(msg)
