@@ -130,6 +130,7 @@ class ManualPlayer(Player):
             self.alert('Card must have two parts; "X, Y": ')
             return self.ask_card(prompt)
         # ready to rumble
+        self.alert('')
         self.obscure_cards()
         return tuple(values)
 
