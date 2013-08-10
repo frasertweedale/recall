@@ -154,3 +154,7 @@ class ManualPlayer(Player):
 
     def notify_outcome(self, win, msg):
         self.alert(msg)
+        self.screen.move(self.game.y + 1, 0)
+        self.screen.clrtoeol()
+        self.screen.addstr(self.game.y + 1, 0, "Press ENTER to exit")
+        self.screen.getstr()
