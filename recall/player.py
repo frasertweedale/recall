@@ -122,17 +122,20 @@ class ManualPlayer(Player):
             self.alert('Enter END GAME CARDS: ')
             raise EndGameException(self.choose_cards())
         try:
-            values = map(int, re.split('[,\s]+', s))
+            values = tuple(map(int, re.split('[,\s]+', s)))
         except ValueError:
-            self.alert('Coordinates must be integer; try again: ')
+            self.alert('Coordinates must be integer; try again.')
             return self.ask_card(prompt)
         if len(values) != 2:
-            self.alert('Card must have two parts; "X, Y": ')
+            self.alert('Card must have two parts; "X, Y".')
+            return self.ask_card(prompt)
+        if values not in self.cards:
+            self.alert('Card is not on the table; try again.')
             return self.ask_card(prompt)
         # ready to rumble
         self.alert('')
         self.obscure_cards()
-        return tuple(values)
+        return values
 
     def alert(self, msg):
         self.screen.move(self.game.y, 0)
