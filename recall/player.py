@@ -88,6 +88,7 @@ class ManualPlayer(Player):
     def __init__(self, game):
         super(ManualPlayer, self).__init__(game)
         self.cards = {(x, y) for x in range(game.x) for y in range(game.y)}
+        self.matched_cards = set()
 
     def play(self):
         curses.wrapper(self._play)
@@ -101,6 +102,8 @@ class ManualPlayer(Player):
     def obscure_cards(self):
         for x, y in self.cards:
             self.screen.addstr(y, x, '@')
+        for x, y in self.matched_cards:
+            self.screen.addstr(y, x, ' ')
 
     def choose_cards(self):
         return (
@@ -143,6 +146,7 @@ class ManualPlayer(Player):
         for x, y in cards:
             self.screen.addstr(y, x, ' ')
         self.cards -= set(cards)
+        self.matched_cards |= set(cards)
 
     def notify_outcome(self, win, msg):
         self.alert(msg)
