@@ -30,7 +30,6 @@ def main():
         player_obj = player.ManualPlayer(game_obj)
 
     result = player_obj.play()
-    print result
 
 
 main()
