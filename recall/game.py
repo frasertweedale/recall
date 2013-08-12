@@ -65,7 +65,7 @@ class OfflineGame(object):
 
     def end(self, cards):
         remaining = len(self.cards)
-        if remaining == 2:
+        if remaining == 2 and self.cards == set(cards):
             return True, "for the win"
         else:
             return False, "epic fail; {} cards remaining".format(remaining)
